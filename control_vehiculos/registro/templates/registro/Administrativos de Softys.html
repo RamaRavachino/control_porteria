@@ -1,0 +1,157 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Administrativos</title>
+    <link rel="stylesheet" href="{% static 'registrocss/estilos.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>      
+</head>
+<body>
+    <div class="segtitle" >Administrativos de Softys</div>
+    <a href="{% url 'pagina_principal' %}" class="botonatras">Atrás</a>
+    
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
+    <div class="row">
+        <div class="container">
+            <form method="post" action="{% url 'control_administrativos' %}">
+                {% csrf_token %}    
+                <div class="form-section">
+                    <label for="entrada_admin1">Entrada</label>
+                    <input type="text" id="entrada_admin1" name="entrada_admin1">
+                </div>
+                <div class="form-section">
+                    <label for="vehiculo">Vehiculo</label>
+                    <input type="text" id="vehiculo" name="vehiculo">
+                </div>
+                <div class="form-section">
+                    <label for="patente">Patente Nro</label>
+                    <input type="text" id="patente" name="patente" required>
+                </div>
+                <div class="form-section">
+                    <label for="apellido_nombre_admin">Apellido y Nombre</label>
+                    <input type="text" id="apellido_nombre_admin" name="apellido_nombre_admin" required>
+                </div>
+                <div class="form-section">
+                    <label for="observaciones">Observaciones</label>
+                    <input type="text" id="observaciones" name="observaciones">
+                </div>
+                <button type="submit" class="botonesregistrar">Registrar</button>
+            </form>
+        </div>
+        
+<div class="container2">
+    <div class="containersalida">
+        <h2>Vehículos Pendientes de Salida</h2>
+        <div class="tabla-vehiculos">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Entrada</th>
+                        <th>Vehiculo</th>
+                        <th>Nombre</th>
+                        <th>Observaciones</th>
+                        <th>Patente</th>
+                        <th>Salida</th>
+                        <!--<th>Entrada 2</th>
+                        <th>Salida 2</th>-->
+                        <th>Registrar Salida</th>
+                        <!--<th>Registrar Ingreso 2</th>
+                        <th>Registrar Salida 2</th>-->
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for administrativo in vehiculos_admin_pendientes %}
+                    <tr>
+                        <td>{{ administrativo.id }}</td>
+                        <td>{{ administrativo.entrada_admin1|date:'Y-m-d / H:i' }}</td>
+                        <td>{{ administrativo.vehiculo }}</td>
+                        <td>{{ administrativo.apellido_nombre_admin }}</td>
+                        <td>{{ administrativo.observaciones }}</td> 
+                        <td>{{ administrativo.patente }}</td>
+                        <td>{{ administrativo.salida_admin1|date:'Y-m-d / H:i' }}</td>
+                        <!--<td>{{ administrativo.entrada_admin2|date:'Y-m-d / H:i' }}</td>
+                        <td>{{ administrativo.salida_admin2|date:'Y-m-d / H:i' }}</td>-->
+                        <td>
+                            <form action="{% url 'registrar_salida_admin' administrativo.id %}" method="POST">
+                                {% csrf_token %}
+                                <input type="datetime-local" name="salida_admin1" placeholder="Registrar Salida">
+                                <button type="submit">Registrar Salida</button>
+                            </form>
+                        </td>
+                        <!--<td>
+                            <form action="{% url 'registrar_entrada_admin2' administrativo.id %}" method="POST">
+                                {% csrf_token %}
+                                <input type="datetime-local" name="entrar_admin2" placeholder="Registrar Entrada 2">
+                                <button type="submit">Registrar Entrada 2</button>
+                            </form>
+                            
+                        </td>
+                        <td>
+                            <form action="{% url 'registrar_salida_admin2' administrativo.id %}" method="POST">
+                                {% csrf_token %}
+                                <input type="datetime-local" name="salida_admin2" placeholder="Registrar Salida 2">
+                                <button type="submit">Registrar Salida 2</button>
+                            </form>
+                        </td>-->
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="9">No hay vehículos pendientes de salida.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                
+            </table>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        flatpickr("#entrada_admin1", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            time_24hr: true,
+            locale: 'es', // Asegúrate de que 'es' está en minúsculas y correctamente referenciado
+            defaultDate: new Date()
+        });
+
+         flatpickr("#entrada_admin2", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            time_24hr: true,
+            locale: 'es', // Asegúrate de que 'es' está en minúsculas y correctamente referenciado
+            defaultDate: new Date()
+        });
+        flatpickr("#entrada_admin2", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            time_24hr: true,
+            locale: 'es', // Asegúrate de que 'es' está en minúsculas y correctamente referenciado
+            defaultDate: new Date()
+        });
+        flatpickr("#salida_admin2", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            time_24hr: true,
+            locale: 'es', // Asegúrate de que 'es' está en minúsculas y correctamente referenciado
+            defaultDate: new Date()
+        });
+    });
+</script>
+
+</body>
+</html>

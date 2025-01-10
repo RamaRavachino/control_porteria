@@ -1,0 +1,25 @@
+# Ignorar carpetas de entorno virtual
+venv/
+# Ignorar todos los archivos JSON en la carpeta credentials
+credentials/*.json
+
+# Ignorar variables de entorno
+.env
+
+# Ignorar archivos temporales de Python
+*.pyc
+*.pyo
+__pycache__/
+
+# Ignorar configuraciones de tu IDE/editor
+.vscode/
+.idea/
+
+# Ignorar archivos comprimidos
+*.zip
+*.tar
+*.tar.gz
+
+# Ignorar base de datos SQLite (si solo es para desarrollo)
+db.sqlite3
+

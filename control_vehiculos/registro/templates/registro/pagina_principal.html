@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Barrera</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Times+New+Roman:wght@400;700&display=swap">
+    <link rel="stylesheet" href="{% static 'registrocss/estilos.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <img src="{% static 'registrocss/logo-softys.png' %}" alt="Logo Izquierda" height="80">
+            <img src="{% static 'registrocss/image-removebg-preview.png' %}" alt="Logo Derecha" height="80">
+        </div>
+        <h1 class="title">Control de Barrera</h1>
+
+        <a href="{% url 'listar_vehiculos_pendientes' %}" class="botonesprin">Control de Ingreso y Egreso de Vehículos</a>
+        <a href="{% url 'listar_camiones_pendientes' %}" class="botonesprin">Control de Ingreso y Egreso de Camiones</a>
+        <a href="{% url 'listar_vehiculos_admin_pendientes' %}" class="botonesprin">Administrativos de Softys Argentina</a>
+    </div>
+</body>
+</html>

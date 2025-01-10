@@ -1,0 +1,169 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Barrera</title>
+    <link rel="stylesheet" href="{% static 'registrocss/estilos.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>   
+</head>
+<body>
+    <div class="segtitle">Control de Ingreso y Egreso de Camiones</div>
+    <a href="{% url 'pagina_principal' %}" class="botonatras">Atrás</a>
+    {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+    <div class="row">
+        <div class="container">
+             <form method="post" action="{% url 'control_camiones' %}">
+                 {% csrf_token %}
+                <div class="form-section">
+                        <label for="ingreso">Ingreso</label>
+                        <input type="datetime-local" id="ingreso" name="ingreso" required>
+                    
+                    <div class="form-section">
+                        <label for="chofer">Chofer</label>
+                        <input type="text" id="chofer" name="chofer" >
+                    </div>
+                    <div class="form-section">
+                        <label for="dni_chofer">DNI</label>
+                        <input type="text" id="dni_chofer" name="dni_chofer" required>
+                    </div>
+                    <div class="form-section">
+                        <label for="transporte">Transporte</label>
+                        <input type="text" id="transporte" name="transporte">
+                    </div>
+                    <div class="form-section">
+                        <label for="tractor">Tractor</label>
+                        <input type="text" id="tractor" name="tractor" required>
+                    </div>
+                    <div class="form-section">
+                        <label for="semi">Semi</label>
+                        <input type="text" id="semi" name="semi">
+                    </div>
+
+                <button type="submit" class="botonesregistrar">Registrar</button>
+             </form>
+        </div>
+    </div>
+<div class="container2">
+        <div class="containersalida">
+            <h2>Camiones Pendientes de Salida</h2>
+            <div class="tabla-vehiculos">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Chofer</th>
+                            <th>DNI</th>
+                            <th>Tractor</th>
+                            <th>Semi</th>
+                            <th>Ingreso</th>
+                            <th>Transporte</th>
+                            <th>Egreso</th>
+                            <th>Ingreso 2</th>
+                            <th>Egreso 2</th>
+                            <th>Ingreso 3</th>
+                            <th>Egreso 3</th>
+                            <th>Registrar Egreso</th>
+                            <th>Registrar Ingreso 2</th>
+                            <th>Registrar Egreso 2</th>
+                            <th>Registrar Ingreso 3</th>
+                            <th>Registrar Egreso 3</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for camion in camiones_pendientes %}
+                        <tr>
+                            <td>{{ camion.id }}</td>
+                            <td>{{ camion.chofer }}</td>
+                            <td>{{ camion.dni }}</td>
+                            <td>{{ camion.tractor }}</td>
+                            <td>{{ camion.semi }}</td>
+                            <td>{{ camion.ingreso }}</td>
+                            <td>{{ camion.transporte }}</td>
+                            <td>{{ camion.egreso }}</td>
+                            <td>{{ camion.ingreso2 }}</td>
+                            <td>{{ camion.egreso2 }}</td>
+                            <td>{{ camion.ingreso3 }}</td>
+                            <td>{{ camion.egreso3 }}</td>
+                            <td>
+                                <form action="{% url 'registrar_salida_camion' camion.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="datetime-local" name="egreso" placeholder="Registrar Salida">
+                                    <button type="submit">Registrar Salida</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="{% url 'registrar_ingreso_camion2' camion.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="text" name="ingreso2" placeholder="Registrar Ingreso 2">
+                                    <button type="submit">Registrar Ingreso 2</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="{% url 'registrar_salida_camion2' camion.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="text" name="egreso2" placeholder="Registrar Salida 2">
+                                    <button type="submit">Registrar Salida 2</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="{% url 'registrar_ingreso_camion3' camion.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="text" name="ingreso3" placeholder="Registrar Ingreso 3">
+                                    <button type="submit">Registrar Ingreso 3</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="{% url 'registrar_salida_camion3' camion.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="text" name="egreso3" placeholder="Registrar Salida 3">
+                                    <button type="submit">Registrar Salida 3</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="12">No hay camiones pendientes de salida.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>    
+    </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        flatpickr("#ingreso", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            time_24hr: true,
+            locale: 'es',
+            defaultDate: new Date()
+        });
+
+        flatpickr("#egreso", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            time_24hr: true,
+            locale: 'es', 
+            defaultDate: new Date()
+        });
+    });
+
+
+</script>    
+</body>
+</html>
