@@ -1,14 +1,11 @@
 # Ignorar carpetas de entorno virtual
 venv/
+
 # Ignorar todos los archivos JSON en la carpeta credentials
 credentials/*.json
 
 # Ignorar el directorio de credenciales
 control_vehiculos/credentials/
-
-# Ignorar el entorno virtual
-venv/
-
 
 # Ignorar variables de entorno
 .env
@@ -29,4 +26,3 @@ __pycache__/
 
 # Ignorar base de datos SQLite (si solo es para desarrollo)
 db.sqlite3
-
