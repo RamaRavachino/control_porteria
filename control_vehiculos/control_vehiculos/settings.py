@@ -29,9 +29,9 @@ TIME_ZONE = 'America/Argentina/Buenos_Aires'  # Ajusta según tu ubicación
 SECRET_KEY = 'django-insecure-wjh3a-la%!@9!dw)*@1h##)8e&x!ener&1s8dcto1lo0iinm6m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ramaravachino2.pythonanywhere.com']
 
 #TIME_ZONE = 'America/Argentina/Buenos_Aires'
 
