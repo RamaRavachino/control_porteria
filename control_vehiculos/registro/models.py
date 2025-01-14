@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.timezone import now
 
 class RegistroVehiculo(models.Model):
     id = models.AutoField(primary_key=True)

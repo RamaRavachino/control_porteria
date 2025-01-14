@@ -10,7 +10,7 @@ from .models import RegistroVehiculo
 
 # Configuración de credenciales y archivo
 CREDENTIALS_FILE = "C:/Users/ramiro_ravachino/Desktop/djangoproject/control_vehiculos/credentials/controlvehiculos-46e0da82ccda.json"
-FILE_ID = "46e0da82ccdadbddf6c64c150f591cb068ad6550"  
+FILE_ID = "1BrF2FzLPlwHnCec1EFxZsDIi7MkOjaTHVZKU0xW6KtY"  
 SCOPES = ["https://www.googleapis.com/auth/drive"]
 
 ENCABEZADOS = {
